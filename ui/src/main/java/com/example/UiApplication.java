@@ -29,25 +29,32 @@ public class UiApplication {
 
     @Controller
     static class HomeController {
+
         @Autowired
         OAuth2RestTemplate restTemplate;
+
         @Value("${messages.url:http://localhost:7777}/api")
         String messagesUrl;
 
         @RequestMapping("/")
         String home(Model model) {
+
             List<Message> messages = Arrays.asList(restTemplate.getForObject(messagesUrl + "/messages", Message[].class));
+
             model.addAttribute("messages", messages);
             return "index";
         }
 
         @RequestMapping(path = "messages", method = RequestMethod.POST)
         String postMessages(@RequestParam String text) {
+
             Message message = new Message();
             message.text = text;
+
             restTemplate.exchange(RequestEntity
                     .post(UriComponentsBuilder.fromHttpUrl(messagesUrl).pathSegment("messages").build().toUri())
                     .body(message), Message.class);
+
             return "redirect:/";
         }
     }

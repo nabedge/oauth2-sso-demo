@@ -25,6 +25,7 @@ import java.util.List;
 @EnableResourceServer
 @RestController
 public class ResourceApplication extends ResourceServerConfigurerAdapter {
+
     final List<Message> messages = Collections.synchronizedList(new LinkedList<>());
 
     @RequestMapping(path = "api/messages", method = RequestMethod.GET)
