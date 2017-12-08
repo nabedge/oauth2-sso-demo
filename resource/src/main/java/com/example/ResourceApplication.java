@@ -1,6 +1,8 @@
 package com.example;
 
 import org.apache.catalina.filters.RequestDumperFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -10,6 +12,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
+import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,6 +28,18 @@ import java.util.List;
 @EnableResourceServer
 @RestController
 public class ResourceApplication extends ResourceServerConfigurerAdapter {
+
+    private static final Logger log = LoggerFactory.getLogger(ResourceApplication.class);
+
+    public static void main(String[] args) {
+        SpringApplication.run(ResourceApplication.class, args);
+    }
+
+    @Profile("!cloud")
+    @Bean
+    RequestDumperFilter requestDumperFilter() {
+        return new RequestDumperFilter();
+    }
 
     final List<Message> messages = Collections.synchronizedList(new LinkedList<>());
 
@@ -55,15 +70,15 @@ public class ResourceApplication extends ResourceServerConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/api/**").access("#oauth2.hasScope('read')")
                 .antMatchers(HttpMethod.POST, "/api/**").access("#oauth2.hasScope('write')");
+
+        http.csrf().disable();
     }
 
-    public static void main(String[] args) {
-        SpringApplication.run(ResourceApplication.class, args);
-    }
+//    @Autowired
+//    private ClientDetailsService clientDetailsService;
 
-    @Profile("!cloud")
-    @Bean
-    RequestDumperFilter requestDumperFilter() {
-        return new RequestDumperFilter();
+    @Override
+    public void configure(ResourceServerSecurityConfigurer configurer) throws Exception {
+//        log.info("authenticationManager = {}", authenticationManager.toString());
     }
 }

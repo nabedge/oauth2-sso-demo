@@ -1,6 +1,6 @@
 security:
-  user:
-    password: password
+#  user:
+#    password: password
 #  oauth2:
 #    client:
 #      client-id: demo

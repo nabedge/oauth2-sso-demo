@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -38,6 +39,7 @@ public class AuthorizationApplication extends AuthorizationServerConfigurerAdapt
     @Configuration
     @Order(-20)
     static class LoginConfig extends WebSecurityConfigurerAdapter {
+
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http
@@ -48,6 +50,14 @@ public class AuthorizationApplication extends AuthorizationServerConfigurerAdapt
                     .and()
                     .authorizeRequests()
                     .anyRequest().authenticated();
+        }
+
+        @Override
+        protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+            auth.inMemoryAuthentication()
+                    .withUser("foo").password("foopassword").roles("USER")
+                    .and()
+                    .withUser("bar").password("barpassword").roles("USER");
         }
     }
 

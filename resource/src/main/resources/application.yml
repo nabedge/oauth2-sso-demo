@@ -1,0 +1,13 @@
+auth-server: http://localhost:9999/uaa
+server:
+  port: 7777
+security:
+  oauth2:
+    resource:
+      token-info-uri: ${auth-server}/oauth/check_token
+#    client:
+#      client-id: demo2
+#      client-secret: demo2
+spring:
+  jackson:
+    date-format: com.fasterxml.jackson.databind.util.ISO8601DateFormat
