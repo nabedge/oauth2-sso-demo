@@ -1,13 +1,22 @@
-auth-server: http://localhost:9999/uaa
+#auth-server: http://localhost:9999/uaa
+auth-server: http://localhost:9999
 server:
+  host: 127.0.0.1
   port: 7777
+  session:
+    cookie:
+      name: RESOURCE_SESSION # statelessにしているからこの設定値は使われないとは思うけど
 security:
   oauth2:
     resource:
       token-info-uri: ${auth-server}/oauth/check_token
-#    client:
-#      client-id: demo2
-#      client-secret: demo2
+    client:
+      client-id: ui
+      client-secret: ui-secret
+#      - client-id: demo
+#        client-secret: demo
+#      - client-id: demo2
+#        client-secret: demo2
 spring:
   jackson:
     date-format: com.fasterxml.jackson.databind.util.ISO8601DateFormat

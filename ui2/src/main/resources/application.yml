@@ -2,17 +2,17 @@
 auth-server: http://localhost:9999
 server:
   host: 127.0.0.1
-  port: 8080
+  port: 8081
   session:
     cookie:
-      name: UI_SESSION
+      name: UI2_SESSION
 security:
   basic:
     enabled: false
   oauth2:
     client:
-      client-id: ui
-      client-secret: ui-secret
+      client-id: ui2
+      client-secret: ui2-secret
       access-token-uri: ${auth-server}/oauth/token
       user-authorization-uri: ${auth-server}/oauth/authorize
       scope: read, write

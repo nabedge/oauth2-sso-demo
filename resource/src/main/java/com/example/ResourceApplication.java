@@ -79,6 +79,7 @@ public class ResourceApplication extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(ResourceServerSecurityConfigurer configurer) throws Exception {
+
 //        log.info("authenticationManager = {}", authenticationManager.toString());
     }
 }

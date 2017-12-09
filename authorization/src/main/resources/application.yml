@@ -10,8 +10,12 @@ security:
 #    authorization:
 #      check-token-access: permitAll()
 server:
+  host: 127.0.0.1
   port: 9999
-  context-path: /uaa
+  #context-path: /uaa
+  session:
+    cookie:
+      name: AUTHORIZATION_SESSION
 logging:
   level:
     org.springframework.security: DEBUG

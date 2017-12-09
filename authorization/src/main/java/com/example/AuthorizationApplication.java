@@ -71,15 +71,15 @@ public class AuthorizationApplication extends AuthorizationServerConfigurerAdapt
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
                 // OAuth2クライアント一つ目
-                .withClient("demo")
-                .secret("demo")
+                .withClient("ui")
+                .secret("ui-secret")
                 .authorizedGrantTypes("authorization_code", "refresh_token")
                 .scopes("read", "write")
                 .autoApprove(true)
                 // OAuth2クライアント二つ目
                 .and()
-                .withClient("demo2")
-                .secret("demo2")
+                .withClient("ui2")
+                .secret("ui2-secret")
                 .authorizedGrantTypes("authorization_code", "refresh_token")
                 .scopes("read", "write")
                 .autoApprove(true)
